@@ -1,6 +1,6 @@
 ## 快速下载booru系图站的图片  
 
-**[安装脚本]()**  
+**[安装脚本](https://github.com/chanvstone/tampermonkey_script_booru/raw/main/src/script/booru.user.js)**  
 
 ### 可用站点  
 
