@@ -6,7 +6,9 @@
 // @author       SiO2
 // @match        https://gelbooru.com/index.php?page=post&s=list*
 // @match        https://gelbooru.com/index.php?page=post&s=view*
-// @icon         
+// @updateURL    https://github.com/chanvstone/tampermonkey_script_booru/raw/main/src/script/booru.user.js
+// @downloadURL  https://github.com/chanvstone/tampermonkey_script_booru/raw/main/src/script/booru.user.js
+// @supportURL   https://github.com/chanvstone/tampermonkey_script_booru
 // @grant        unsafeWindow
 // @grant        Subresource Integrity
 // @grant        GM_addStyle
