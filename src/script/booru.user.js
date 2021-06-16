@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Booru Downloader
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  download pictures easilier
 // @author       SiO2
 // @match        https://gelbooru.com/index.php?page=post&s=list*
 // @match        https://gelbooru.com/index.php?page=post&s=view*
+// @match        https://danbooru.donmai.us/*
 // @updateURL    https://github.com/chanvstone/tampermonkey_script_booru/raw/main/src/script/booru.user.js
 // @downloadURL  https://github.com/chanvstone/tampermonkey_script_booru/raw/main/src/script/booru.user.js
 // @supportURL   https://github.com/chanvstone/tampermonkey_script_booru
@@ -120,11 +121,11 @@ class Booru {
 class Gel extends Booru {
     /**
      * GelBooru
-     * @param {string} url url of current page
+     * @param {string} pageUrl url of current page
      */
-    constructor(url) {
+    constructor(pageUrl) {
         super();
-        this.url = url;
+        this.pageUrl = pageUrl;
     }
     /**
      * load style
@@ -136,9 +137,9 @@ class Gel extends Booru {
      * do mod
      */
     mod() {
-        if (this.url.includes("s=list")) {
+        if (this.pageUrl.includes("s=list")) {
             this.mod4List();
-        } else if (this.url.includes("s=view")) {
+        } else if (this.pageUrl.includes("s=view")) {
             this.mod4View();
         }
     }
@@ -166,7 +167,39 @@ class Gel extends Booru {
 }
 
 class Dan extends Booru {
-    // todo
+    /**
+     * 
+     * @param {string} pageUrl 
+     */
+    constructor(pageUrl) {
+        super();
+        this.pageUrl = pageUrl;
+    }
+    loadStyle() {
+        GM_addStyle("article.post-preview{height:200px;}.fit-width{height:95vh !important;width:auto;}");
+    }
+    mod() {
+        if (this.pageUrl.includes("posts/")) {
+            this.mod4View();
+        } else {
+            this.mod4List();
+        }
+    }
+    mod4List() {
+        document.querySelectorAll("article.post-preview").forEach((value,key,parent)=>{
+            let fileUrl=value.getAttribute("data-file-url");
+            let id=value.getAttribute("data-id");
+            let download=new Download(id,fileUrl);
+            download.insertButton4List(value);
+        });
+    }
+    mod4View() {
+        let section=document.querySelector("section.image-container");
+        let id=section.getAttribute("data-id");
+        let fileUrl=section.getAttribute("data-file-url");
+        let download=new Download(id,fileUrl);
+        download.insertButton4View(section);
+    }
 }
 
 Download.loadStyle();
@@ -176,7 +209,7 @@ if (pageUrl.includes("gelbooru.com")) {
     gel.loadStyle();
     gel.mod();
 } else if (pageUrl.includes("danbooru.donmai.us")) {
-    let dan = new Dan();
+    let dan = new Dan(pageUrl);
     dan.loadStyle();
     dan.mod();
 }

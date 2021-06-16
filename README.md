@@ -7,4 +7,5 @@
 |站点|可用性|  
 |:---:|:---:|  
 |[GelBooru](https://gelbooru.com/)|&#10004;|  
-|[DanBooru](https://danbooru.donmai.us/)|TODO|  
+|[DanBooru](https://danbooru.donmai.us/)|&#10004;|  
+|others|TODO|  
